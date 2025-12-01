@@ -371,6 +371,12 @@ enum evmc_status_code
     /** The caller does not have enough funds for value transfer. */
     EVMC_INSUFFICIENT_BALANCE = 17,
 
+    /**
+     * A transaction violated the Monad reserve balance checks during
+     * execution.
+     */
+    EVMC_MONAD_RESERVE_BALANCE_VIOLATION = 18,
+
     /** EVM implementation generic internal error. */
     EVMC_INTERNAL_ERROR = -1,
 
