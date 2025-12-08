@@ -200,6 +200,21 @@ struct evmc_message
      * The length of the code to be executed.
      */
     size_t code_size;
+
+    /**
+     * Start of transaction wide memory
+     */
+    uint8_t* memory_handle;
+
+    /**
+     * Start of memory available to current call
+     */
+    uint8_t* memory;
+
+    /**
+     * Capacity of memory available to current call
+     */
+    uint32_t memory_capacity;
 };
 
 /** The hashed initcode used for TXCREATE instruction. */
