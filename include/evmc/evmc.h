@@ -192,16 +192,6 @@ struct evmc_message
     evmc_address code_address;
 
     /**
-     * The code to be executed.
-     */
-    const uint8_t* code;
-
-    /**
-     * The length of the code to be executed.
-     */
-    size_t code_size;
-
-    /**
      * Start of transaction wide memory
      */
     uint8_t* memory_handle;

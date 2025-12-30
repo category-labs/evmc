@@ -97,9 +97,7 @@ TEST_F(evmc_vm_test, execute_create)
                            0,
                            evmc_uint256be{},
                            evmc_bytes32{},
-                           evmc_address{},
-                           nullptr,
-                           0};
+                           evmc_address{}};
     std::array<uint8_t, 2> code = {{0xfe, 0x00}};
 
     const evmc_result result =
@@ -190,9 +188,7 @@ TEST_F(evmc_vm_test, precompile_test)
                                0,
                                evmc_uint256be{},
                                evmc_bytes32{},
-                               addr,
-                               nullptr,
-                               0};
+                               addr};
 
         const evmc_result result =
             vm->execute(vm, nullptr, nullptr, EVMC_MAX_REVISION, &msg, nullptr, 0);
