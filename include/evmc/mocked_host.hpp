@@ -74,6 +74,9 @@ struct MockedAccount
 /// Mocked EVMC Host implementation.
 class MockedHost : public Host
 {
+private:
+    std::function<bool()> revert_transaction_;
+    
 public:
     /// LOG record.
     struct log_record
@@ -146,6 +149,11 @@ private:
     }
 
 public:
+    MockedHost(std::function<bool()> revert_transaction = []() { return false; })
+    : revert_transaction_(revert_transaction)
+    {
+    }
+
     /// Returns true if an account exists (EVMC Host method).
     bool account_exists(const address& addr) const noexcept override
     {
@@ -506,6 +514,12 @@ public:
     {
         record_account_access(addr);
         accounts[addr].transient_storage[key] = value;
+    }
+
+    /// Get whether the current transaction will revert.
+    bool revert_transaction() noexcept override
+    {
+        return revert_transaction_();
     }
 };
 }  // namespace evmc

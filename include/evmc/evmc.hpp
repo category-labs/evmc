@@ -499,6 +499,9 @@ public:
     virtual void set_transient_storage(const address& addr,
                                        const bytes32& key,
                                        const bytes32& value) noexcept = 0;
+
+    /// @copydoc evmc_host_interface::revert_transaction
+    virtual bool revert_transaction() noexcept = 0;
 };
 
 
@@ -608,6 +611,10 @@ public:
                                const bytes32& value) noexcept final
     {
         host->set_transient_storage(context, &address, &key, &value);
+    }
+ 
+    bool revert_transaction() noexcept final {
+        return host->revert_transaction(context);
     }
 };
 
@@ -877,6 +884,11 @@ inline void set_transient_storage(evmc_host_context* h,
 {
     Host::from_context(h)->set_transient_storage(*addr, *key, *value);
 }
+
+inline bool revert_transaction(evmc_host_context* h) noexcept
+{
+    return Host::from_context(h)->revert_transaction();
+}
 }  // namespace internal
 
 inline const evmc_host_interface& Host::get_interface() noexcept
@@ -898,6 +910,7 @@ inline const evmc_host_interface& Host::get_interface() noexcept
         ::evmc::internal::access_storage,
         ::evmc::internal::get_transient_storage,
         ::evmc::internal::set_transient_storage,
+        ::evmc::internal::revert_transaction,
     };
     return interface;
 }

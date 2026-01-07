@@ -790,6 +790,16 @@ typedef void (*evmc_emit_log_fn)(struct evmc_host_context* context,
                                  size_t topics_count);
 
 /**
+ * Revert transaction callback function.
+ *
+ * This callback function is used by an EVM to check whether a transaction
+ * will be reverted.
+ *
+ * @param context       The pointer to the Host execution context. See ::evmc_host_context.
+ */
+typedef bool (*evmc_revert_transaction_fn)(struct evmc_host_context* context);
+
+/**
  * Access status per EIP-2929: Gas cost increases for state access opcodes.
  */
 enum evmc_access_status
@@ -902,6 +912,9 @@ struct evmc_host_interface
 
     /** Set transient storage callback function. */
     evmc_set_transient_storage_fn set_transient_storage;
+
+    /** Revert transaction callback function. */
+    evmc_revert_transaction_fn revert_transaction;
 };
 
 
