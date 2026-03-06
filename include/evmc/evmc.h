@@ -86,8 +86,11 @@ enum evmc_call_kind
 /** The flags for ::evmc_message. */
 enum evmc_flags
 {
-    EVMC_STATIC = 1,   /**< Static call mode. */
-    EVMC_DELEGATED = 2 /**< Delegated call mode (EIP-7702). Valid since Prague. */
+    EVMC_STATIC = 1,        /**< Static call mode. */
+    EVMC_DELEGATED = 2,     /**< Delegated call mode (EIP-7702). Valid since Prague. */
+    EVMC_FLAGS_SENTINEL = 4 /**< NOTE: This must be the last member of this enum AND assigned a
+                               value that is a power of two AND this value must be larger than
+                               any other flag value. */
 };
 
 /**
