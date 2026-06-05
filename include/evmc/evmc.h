@@ -232,6 +232,7 @@ struct evmc_tx_context
     size_t blob_hashes_count;          /**< The number of blob hashes (EIP-4844). */
     const evmc_tx_initcode* initcodes; /**< The array of transaction initcodes (TXCREATE). */
     size_t initcodes_count;            /**< The number of transaction initcodes (TXCREATE). */
+    uint64_t block_round;              /**< The Monad consensus round number; 0 for EVM. */
 };
 
 /**
