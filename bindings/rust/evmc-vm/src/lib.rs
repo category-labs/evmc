@@ -525,6 +525,7 @@ impl From<ExecutionResult> for ffi::evmc_result {
             status_code: value.status_code,
             gas_left: value.gas_left,
             gas_refund: value.gas_refund,
+            growth_gas: 0,
             output_data: buffer,
             output_size: len,
             release: Some(release_stack_result),
@@ -625,6 +626,7 @@ mod tests {
             status_code: StatusCode::EVMC_SUCCESS,
             gas_left: 1337,
             gas_refund: 21,
+            growth_gas: 0,
             output_data: Box::into_raw(Box::new([0xde, 0xad, 0xbe, 0xef])) as *const u8,
             output_size: 4,
             release: Some(test_result_dispose),
@@ -975,6 +977,7 @@ mod tests {
             },
             gas_left: 2,
             gas_refund: 0,
+            growth_gas: 0,
             // NOTE: we are passing the input pointer here, but for testing the lifetime is ok
             output_data: msg.input_data,
             output_size: msg.input_size,
