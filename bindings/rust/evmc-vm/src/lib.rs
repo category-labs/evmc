@@ -1003,6 +1003,7 @@ mod tests {
             access_storage: None,
             get_transient_storage: None,
             set_transient_storage: None,
+            update_page: None,
         }
     }
 

@@ -92,6 +92,13 @@ public:
                                const evmc::bytes32& /*key*/,
                                const evmc::bytes32& /*value*/) noexcept override
     {}
+
+    evmc_page_storage_status update_page(const evmc::address& /*addr*/,
+                                         const evmc::bytes32& /*key*/,
+                                         evmc_storage_status /*status*/) noexcept final
+    {
+        return {false, false};
+    }
 };
 
 TEST(cpp, address)

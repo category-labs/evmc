@@ -196,6 +196,13 @@ public:
     {
         accounts[addr].transient_storage[key] = value;
     }
+
+    evmc_page_storage_status update_page(const evmc::address& /*addr*/,
+                                         const evmc::bytes32& /*key*/,
+                                         evmc_storage_status /*status*/) noexcept final
+    {
+        return {false, false};
+    }
 };
 
 
