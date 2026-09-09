@@ -499,6 +499,11 @@ public:
     virtual void set_transient_storage(const address& addr,
                                        const bytes32& key,
                                        const bytes32& value) noexcept = 0;
+
+    /// @copydoc evmc_host_interface::update_page
+    virtual evmc_page_storage_status update_page(const address& addr,
+                                                 const bytes32& key,
+                                                 evmc_storage_status status) noexcept = 0;
 };
 
 
@@ -608,6 +613,13 @@ public:
                                const bytes32& value) noexcept final
     {
         host->set_transient_storage(context, &address, &key, &value);
+    }
+
+    evmc_page_storage_status update_page(const address& address,
+                                         const bytes32& key,
+                                         evmc_storage_status status) noexcept final
+    {
+        return host->update_page(context, &address, &key, status);
     }
 };
 
@@ -877,6 +889,14 @@ inline void set_transient_storage(evmc_host_context* h,
 {
     Host::from_context(h)->set_transient_storage(*addr, *key, *value);
 }
+
+inline evmc_page_storage_status update_page(evmc_host_context* h,
+                                            const evmc_address* addr,
+                                            const evmc_bytes32* key,
+                                            evmc_storage_status status) noexcept
+{
+    return Host::from_context(h)->update_page(*addr, *key, status);
+}
 }  // namespace internal
 
 inline const evmc_host_interface& Host::get_interface() noexcept
@@ -898,6 +918,7 @@ inline const evmc_host_interface& Host::get_interface() noexcept
         ::evmc::internal::access_storage,
         ::evmc::internal::get_transient_storage,
         ::evmc::internal::set_transient_storage,
+        ::evmc::internal::update_page,
     };
     return interface;
 }

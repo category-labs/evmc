@@ -847,6 +847,40 @@ typedef struct evmc_result (*evmc_call_fn)(struct evmc_host_context* context,
                                            const struct evmc_message* msg);
 
 /**
+ * MIP-8 SSTORE
+ */
+struct evmc_page_storage_status
+{
+    /**
+     * True if this SSTORE is the first in the current transaction to modify the contents of the
+     * page containing the key.
+     */
+    bool first_page_write;
+
+    /**
+     * True if this SSTORE increases the number of occupied slots in the page above the highest
+     * value it has reached so far in the current transaction.
+     */
+    bool grew_state;
+};
+
+/**
+ * MIP-8 update page callback function.
+ *
+ * This callback function is used by a VM to account for an SSTORE into a storage page.
+ *
+ * @param context  The Host execution context.
+ * @param address  The address of the account.
+ * @param key      The index of the account's storage entry.
+ * @param status   The status returned by the ::evmc_set_storage_fn call for the same entry.
+ * @return         The page storage status.
+ */
+typedef struct evmc_page_storage_status (*evmc_update_page_fn)(struct evmc_host_context* context,
+                                                               const evmc_address* address,
+                                                               const evmc_bytes32* key,
+                                                               enum evmc_storage_status status);
+
+/**
  * The Host interface.
  *
  * The set of all callback functions expected by VM instances. This is C
@@ -903,6 +937,9 @@ struct evmc_host_interface
 
     /** Set transient storage callback function. */
     evmc_set_transient_storage_fn set_transient_storage;
+
+    /** Update page callback function. */
+    evmc_update_page_fn update_page;
 };
 
 

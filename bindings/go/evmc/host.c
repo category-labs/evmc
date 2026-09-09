@@ -29,6 +29,7 @@ const struct evmc_host_interface evmc_go_host = {
     (evmc_access_storage_fn)accessStorage,
     (evmc_get_transient_storage_fn)getTransientStorage,
     (evmc_set_transient_storage_fn)setTransientStorage,
+    NULL, // update_page: MIP-8 not implemented by the Go binding.
 };
 
 

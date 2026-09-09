@@ -507,5 +507,26 @@ public:
         record_account_access(addr);
         accounts[addr].transient_storage[key] = value;
     }
+
+    /// MIP-8 SSTORE storage page
+    ///
+    /// The mock does not model pages, so every write is considered the first for
+    /// the page and state grows when adding a slot.
+    ///
+    /// @param addr    The account address.
+    /// @param key     The account's storage key.
+    /// @param status  The status returned by the corresponding set_storage call.
+    /// @return        The page status.
+    evmc_page_storage_status update_page(const address& addr,
+                                         const bytes32& key,
+                                         evmc_storage_status status) noexcept override
+    {
+        record_account_access(addr);
+        (void)key;
+        const bool created = status == EVMC_STORAGE_ADDED ||
+                             status == EVMC_STORAGE_DELETED_ADDED ||
+                             status == EVMC_STORAGE_DELETED_RESTORED;
+        return {status != EVMC_STORAGE_ASSIGNED, created};
+    }
 };
 }  // namespace evmc
