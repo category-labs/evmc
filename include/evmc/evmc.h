@@ -447,6 +447,12 @@ struct evmc_result
     int64_t gas_refund;
 
     /**
+     * Gas attributed to state growth accumulated during this execution and
+     * its sub-calls.
+     */
+    uint64_t growth_gas;
+
+    /**
      * The reference to output data.
      *
      * The output contains data coming from RETURN opcode (iff evmc_result::code
@@ -506,8 +512,6 @@ struct evmc_result
      * to be optionally used by the evmc_result object creator.
      *
      * @see evmc_result_optional_data, evmc_get_optional_data().
-     *
-     * Also extends the size of the evmc_result to 64 bytes (full cache line).
      */
     uint8_t padding[4];
 };
