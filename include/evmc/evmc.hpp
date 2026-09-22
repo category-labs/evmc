@@ -464,7 +464,7 @@ public:
     virtual size_t copy_code(const address& addr,
                              size_t code_offset,
                              uint8_t* buffer_data,
-                             size_t buffer_size) const noexcept = 0;
+                             size_t buffer_size) const = 0;
 
     /// @copydoc evmc_host_interface::selfdestruct
     virtual bool selfdestruct(const address& addr, const address& beneficiary) noexcept = 0;
@@ -486,7 +486,7 @@ public:
                           size_t num_topics) noexcept = 0;
 
     /// @copydoc evmc_host_interface::access_account
-    virtual evmc_access_status access_account(const address& addr) noexcept = 0;
+    virtual evmc_access_status access_account(const address& addr) = 0;
 
     /// @copydoc evmc_host_interface::access_storage
     virtual evmc_access_status access_storage(const address& addr, const bytes32& key) noexcept = 0;
@@ -561,7 +561,7 @@ public:
     size_t copy_code(const address& address,
                      size_t code_offset,
                      uint8_t* buffer_data,
-                     size_t buffer_size) const noexcept final
+                     size_t buffer_size) const final
     {
         return host->copy_code(context, &address, code_offset, buffer_data, buffer_size);
     }
@@ -577,7 +577,10 @@ public:
     }
 
     /// @copydoc HostInterface::get_tx_context()
-    const evmc_tx_context* get_tx_context() const noexcept final { return host->get_tx_context(context); }
+    const evmc_tx_context* get_tx_context() const noexcept final
+    {
+        return host->get_tx_context(context);
+    }
 
     bytes32 get_block_hash(int64_t number) const noexcept final
     {
