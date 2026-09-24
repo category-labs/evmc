@@ -866,7 +866,7 @@ inline void emit_log(evmc_host_context* h,
                                     num_topics);
 }
 
-inline evmc_access_status access_account(evmc_host_context* h, const evmc_address* addr) noexcept
+inline evmc_access_status access_account(evmc_host_context* h, const evmc_address* addr)
 {
     return Host::from_context(h)->access_account(*addr);
 }
