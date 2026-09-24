@@ -828,7 +828,7 @@ inline size_t copy_code(evmc_host_context* h,
                         const evmc_address* addr,
                         size_t code_offset,
                         uint8_t* buffer_data,
-                        size_t buffer_size) noexcept
+                        size_t buffer_size)
 {
     return Host::from_context(h)->copy_code(*addr, code_offset, buffer_data, buffer_size);
 }
